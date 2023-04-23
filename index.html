@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content-Type="IE-edge">
+    <link rel="stylesheet" content="text/css" href="index.css">
+    <link rel="stylesheet" content="text/css" href="global.css">
+    <script src=index.js></script>
+    <script src=validations.js></script>
+    <script src=loading.js></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Controle de gastos</title>
+</head>
+<body class="centralize">
+    <form>
+        <div class="form-field">
+            <div><label>Email</label></div>
+            <input type="email" name="email" id="email" placeholder="seu@email.com" id="email" onchange="onChangeEmail()"/>
+            <div class="error" id="email-required-error">Email é obrigatório</div>
+            <div class="error" id="email-invalid-error">Email é inválido</div>
+        <div class="form-field">
+            <div><label>Senha</label></div>
+            <input type="password" name="password" id="password" placeholder="Senha" onchange="onChangePassword()"/>
+            <div class="error" id="password-required-error">Senha é obrigatória</div>
+        </div>
+        <div>
+            <button type="button" class="clear" id="recover-password-button" onclick="recoverPassword()" disabled="true">Recuperar senha</button>
+        </div>
+        <div>
+            <button type="button" class="solid" id="login-button" disabled="true" onclick="login()">Entrar</button>
+        </div>
+        <div>
+            <button type="button" class="outline" onclick="register()">Registrar</button>
+        </div>
+    </form>
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/9.20.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.20.0/firebase-auth-compat.js"></script>
+<script type="module">
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDFO8A8xKvrSEsnwEnszJ8wqeSoX-OCDvU",
+      authDomain: "controle-de-gastos-8ba1e.firebaseapp.com",
+      projectId: "controle-de-gastos-8ba1e",
+      storageBucket: "controle-de-gastos-8ba1e.appspot.com",
+      messagingSenderId: "706955209633",
+      appId: "1:706955209633:web:dc49e59e449153b530b9e0"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</html>
