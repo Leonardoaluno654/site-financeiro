@@ -6,12 +6,33 @@ function logout() {
     })
 }
 
-findTransactions();
+firebase.auth().onAuthStateChanged( user => {
+    if (user){
+        findTransactions(user);
+    }
+})
 
-function findTransactions() {
-    setTimeout(() => {
-        addTransactionsToScreen(fakeTransactions);
-    }, 1000)
+function newTransaction() {
+    window.location.href="../transaction/transaction.html";
+}
+
+function findTransactions(user) {
+    showLoading();
+    firebase.firestore()
+        .collection('transactions')
+        .where('user.uid', '==', user.uid)
+        .orderBy('date', 'desc')
+        .get()
+        .then(snapshot => {
+            hideLoading();
+            const transactions = snapshot.docs.map(doc => doc.data());
+            addTransactionsToScreen(transactions);
+        })
+        .catch(error => {
+            hideLoading();
+            console.log(eror);
+            alert('Erro ao recuperar transação')
+        })
 }
 
 function addTransactionsToScreen(transactions) {
@@ -50,41 +71,3 @@ function formatDate(date) {
 function formatMoney(money) {
     return `${money.currency} ${money.value.toFixed(2)}`
 }
-
-
-const fakeTransactions = [{
-    type: 'expense',
-    date: '2022-01-04',
-    money: {
-        currency: 'R$',
-        value: 10
-    },
-    transactionType: 'Supermercado'
-}, {
-    type: 'income',
-    date: '2022-01-03',
-    money: {
-        currency: 'R$',
-        value: 5000
-    },
-    transactionType: 'Salário',
-    description: 'Empresa A'
-}, {
-    type: 'expense',
-    date: '2022-01-01',
-    money: {
-        currency: 'EUR',
-        value: 10
-    },
-    transactionType: 'Transporte',
-    description: "Metrô ida e volta"
-}, {
-    type: 'expense',
-    date: '2022-01-01',
-    money: {
-        currency: 'USD',
-        value: 600
-    },
-    transactionType: 'Aluguel',
-    description: "Mensalidade"
-}]
